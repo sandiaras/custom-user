@@ -1,32 +1,36 @@
-
+# Register name form
 serempre_usr.user_register:
-  path: '/user-register'
+  path: '/usuario/registro'
   defaults:
     _form: '\Drupal\serempre_usr\Form\UserRegister'
     _title: 'Register a new user'
   requirements:
     _permission: 'access content'
 
+# List of names and id's
 serempre_usr.user_list:
-  path: '/user-list'
+  path: '/usuario/consulta'
   defaults:
     _controller: '\Drupal\serempre_usr\Controller\UserIOController::users_list'
     _title: 'List of users'
   requirements:
     _permission: 'access content'
 
+# Export names to excel file
+serempre_usr.user_export:
+  path: '/usuario/consulta/excel'
+  defaults:
+    _controller: '\Drupal\serempre_usr\Controller\UserIOController::user_export'
+    _title: 'Export users to a XLS file'
+  requirements:
+    _permission: 'access content'
+
+# Import file from cvs file
 serempre_usr.user_import:
-  path: '/user-import'
+  path: '/usuario/importar'
   defaults:
     _controller: '\Drupal\serempre_usr\Controller\UserIOController::user_import'
     _title: 'Import users from a CVS file'
   requirements:
     _permission: 'access content'
 
-serempre_usr.user_export:
-  path: '/user-export'
-  defaults:
-    _controller: '\Drupal\serempre_usr\Controller\UserIOController::user_export'
-    _title: 'Export users to a XLS file'
-  requirements:
-    _permission: 'access content'
