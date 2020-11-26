@@ -3,3 +3,5 @@ type: module
 description: 'Basic operations for custom entity user'
 core: 8.x
 package: 'Custom'
+dependencies:
+  - phpoffice/phpexcel

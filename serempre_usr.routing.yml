@@ -22,3 +22,11 @@ serempre_usr.user_import:
     _title: 'Import users from a CVS file'
   requirements:
     _permission: 'access content'
+
+serempre_usr.user_export:
+  path: '/user-export'
+  defaults:
+    _controller: '\Drupal\serempre_usr\Controller\UserIOController::user_export'
+    _title: 'Export users to a XLS file'
+  requirements:
+    _permission: 'access content'

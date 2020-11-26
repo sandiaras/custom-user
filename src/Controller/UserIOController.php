@@ -14,7 +14,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 class UserIOController extends ControllerBase {
 
   /**
-   * UserIO.
+   * Import data form
    *
    * @return array
    *  
@@ -26,15 +26,22 @@ class UserIOController extends ControllerBase {
     return $form;
   }
 
+
+  /**
+   * Export names to excel file
+   *
+   * @return file
+   *  
+   */
   public function user_export() {
+
     $response = new Response();
     $response->headers->set('Pragma', 'no-cache');
     $response->headers->set('Expires', '0');
     $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     $response->headers->set('Content-Disposition', 'attachment; filename=spreadsheet.xlsx');
     
-    // Create new Spreadsheet object
-    $spreadsheet = new Spreadsheet();
+    $spreadsheet = new \PHPExcel();
     
     // Set workbook properties
     $spreadsheet->getProperties()->setCreator('Sandi Aramayo')
@@ -46,23 +53,37 @@ class UserIOController extends ControllerBase {
                 ->setCategory('Test file');
 
     //Set active sheet index to the first sheet, 
-    //and add some data
-    $spreadsheet->setActiveSheetIndex(0)
-                ->setCellValue('A1', 'Id')
-                ->setCellValue('B2', 'Name');
+    $spreadsheet->setActiveSheetIndex(0);
+
+    $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(0,1,'Id');
+    $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(1,1,'Name');
+
+    $result = \Drupal::database()->select('myusers', 'm')
+          ->fields('m', array('id', 'name'))
+          ->execute()->fetchAllAssoc('id');
+
+    if(count($result)>0){
+
+      $row = 2;
+      foreach ($result as $content) {
+        $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(0, $row, $content->id);
+        $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(1, $row, $content->name);
+        $row++;
+      }
+  
+    }
 
     // Set worksheet title
     $spreadsheet->getActiveSheet()->setTitle('Users');
-
-    // Set active sheet index to the first sheet, so Excel opens this as the first sheet
-    $spreadsheet->setActiveSheetIndex(0);
  
-    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+    //$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+    $writer = new \PHPExcel_Writer_Excel2007($spreadsheet);
     ob_start();
     $writer->save('php://output');
     $content = ob_get_clean();
     $response->setContent($content);
     return $response;
+    
   }
 
 
