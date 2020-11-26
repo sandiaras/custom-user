@@ -6,17 +6,20 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\file\Entity\File;
 
 class UserImportForm extends FormBase {
+
+
   /**
    * {@inheritdoc}
    */
   public function getFormId() {
     return 'user_import';
   }
+
+
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-
 
     $form['import_csv'] = array(
       '#type'               => 'managed_file',
@@ -38,6 +41,7 @@ class UserImportForm extends FormBase {
     return $form;
   }
 
+
   /**
    * {@inheritdoc}
    */
@@ -49,11 +53,11 @@ class UserImportForm extends FormBase {
       $file = File::load($csv_file[0]);
       $file->setPermanent();
       $file->save();
-
     }
 
     $data = $this->csvtoarray($file->getFileUri(), ',');
 
+    // create an array with the operation and the element
     foreach($data as $row) {
 
       $name = str_replace(';','', array_shift($row));
@@ -64,6 +68,7 @@ class UserImportForm extends FormBase {
 
     }
 
+    // defining batch options
     $batch = array(
       'title'        => t('Importing Names...'),
       'operations'   => $operations,
@@ -74,6 +79,11 @@ class UserImportForm extends FormBase {
     batch_set($batch);
   }
 
+
+  /**
+   * Read file and convert into an array each element from the file
+   * @Return array
+   */
   public function csvtoarray($filename='', $delimiter){
 
     if(!file_exists($filename) || !is_readable($filename)) return FALSE;
