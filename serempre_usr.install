@@ -41,11 +41,11 @@ function serempre_usr_schema() {
           'not null' => TRUE,
           'description' => 'Primary Key: Unique ID.',
         ],
-        'date' => [
+        'fecha' => [
           'mysql_type' => 'timestamp',
           'not null' => TRUE,
           'mysql_default' => 'CURRENT_TIMESTAMP',
-          'description' => 'Date when the log was create',
+          'description' => 'Date when the log was created',
         ],
         'ip' => [
           'type' => 'varchar',
@@ -61,7 +61,7 @@ function serempre_usr_schema() {
           'default' => '',
           'description' => 'User ID',
         ],
-        'type' => [
+        'tipo_log' => [
           'type' => 'varchar',
           'length' => 255,
           'not null' => TRUE,

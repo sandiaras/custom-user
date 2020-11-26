@@ -42,11 +42,11 @@ function serempre_usr_theme() {
 function serempre_usr_user_insert(Drupal\Core\Entity\EntityInterface $entity){
 
   $database = \Drupal::service('database');
-  $database->insert('serempre_usr_log')
+  $database->insert('myusers_log')
     ->fields([
       'ip' => \Drupal::request()->getClientIp(),
       'uid' => \Drupal::currentUser()->id(),
-      'type' => 'register'
+      'tipo_log' => 'register'
     ])
     ->execute();
 
@@ -72,11 +72,11 @@ function serempre_usr_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $f
 function _serempre_usr_login_user_form_foo($form, \Drupal\Core\Form\FormStateInterface $form_state){
 
   $database = \Drupal::service('database');
-  $database->insert('serempre_usr_log')
+  $database->insert('myusers_log')
     ->fields([
       'ip' => \Drupal::request()->getClientIp(),
       'uid' => \Drupal::currentUser()->id(),
-      'type' => 'login'
+      'tipo_log' => 'login'
     ])
     ->execute();
 
