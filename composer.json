@@ -1,0 +1,13 @@
+{
+    "name": "serempre_usr",
+    "type": "drupal-module",
+    "description": "Basic operations for custom entity user",
+    "keywords": [
+    ],
+    "homepage": "https://www.drupal.org/project/serempre_usr",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/serempre_usr",
+        "source": "http://cgit.drupalcode.org/serempre_usr"
+    }
+}

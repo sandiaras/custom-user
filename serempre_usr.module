@@ -1,0 +1,84 @@
+<?php
+
+/**
+ * @file
+ * Contains serempre_usr.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function serempre_usr_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the serempre_usr module.
+    case 'help.page.serempre_usr':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Help for Serempre custom user module') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function serempre_usr_theme() {
+  return [
+    'serempre_usr' => [
+      'render element' => 'children',
+    ],
+  ];
+}
+
+
+/**
+ * Implements hook_ENTITY_TYPE_insert
+ * @param $entity
+ */
+function serempre_usr_user_insert(Drupal\Core\Entity\EntityInterface $entity){
+
+  $database = \Drupal::service('database');
+  $database->insert('serempre_usr_log')
+    ->fields([
+      'ip' => \Drupal::request()->getClientIp(),
+      'uid' => \Drupal::currentUser()->id(),
+      'type' => 'register'
+    ])
+    ->execute();
+
+}
+
+
+/**
+ * Implements hook_form_alter
+ */
+function serempre_usr_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id){
+
+  if($form_id == 'user_login_form'){
+    $form['#submit'][] = '_serempre_usr_login_user_form_foo';
+  }
+}
+
+
+/**
+ * Callback custom submit
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ */
+function _serempre_usr_login_user_form_foo($form, \Drupal\Core\Form\FormStateInterface $form_state){
+
+  $database = \Drupal::service('database');
+  $database->insert('serempre_usr_log')
+    ->fields([
+      'ip' => \Drupal::request()->getClientIp(),
+      'uid' => \Drupal::currentUser()->id(),
+      'type' => 'login'
+    ])
+    ->execute();
+
+
+}

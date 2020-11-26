@@ -1,0 +1,16 @@
+jquery-validate:
+  remote: https://cdnjs.cloudflare.com/
+  license:
+    name: MIT
+  js:
+    //cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js: { type: external, minified: true }
+    //cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/additional-methods.js: { type: external, minified: false }
+  dependencies:
+    - core/jquery
+frontend:
+  version: 1.x.29
+  js:
+    js/serempre_usr.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal

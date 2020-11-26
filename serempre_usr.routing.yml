@@ -1,0 +1,24 @@
+
+serempre_usr.user_register:
+  path: '/user-register'
+  defaults:
+    _form: '\Drupal\serempre_usr\Form\UserRegister'
+    _title: 'Register a new user'
+  requirements:
+    _permission: 'access content'
+
+serempre_usr.user_list:
+  path: '/user-list'
+  defaults:
+    _controller: '\Drupal\serempre_usr\Controller\UserListController::users_list'
+    _title: 'List of users'
+  requirements:
+    _permission: 'access content'
+
+serempre_usr.user_import:
+  path: '/user-import'
+  defaults:
+    _controller: '\Drupal\serempre_usr\Controller\UserImportController::user_import'
+    _title: 'Import users from a CVS file'
+  requirements:
+    _permission: 'access content'

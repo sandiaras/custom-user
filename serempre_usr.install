@@ -1,0 +1,76 @@
+<?php
+
+
+/**
+ * Implements hook_schema().
+ *
+ * Defines the database tables used by this module.
+ *
+ * @see hook_schema()
+ *
+ * @ingroup dbtng_example
+ */
+function serempre_usr_schema() {
+  $schema['myusers'] = [
+    'description' => 'Store custom users.',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique ID.',
+      ],
+      'name' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Name',
+      ],
+    ],
+    'primary key' => ['id'],
+    'indexes' => [
+      'name' => ['name']
+    ],
+  ];
+
+  $schema['myusers_log'] = [
+      'description' => 'Stores logs',
+      'fields' => [
+        'lid' => [
+          'type' => 'serial',
+          'not null' => TRUE,
+          'description' => 'Primary Key: Unique ID.',
+        ],
+        'date' => [
+          'mysql_type' => 'timestamp',
+          'not null' => TRUE,
+          'mysql_default' => 'CURRENT_TIMESTAMP',
+          'description' => 'Date when the log was create',
+        ],
+        'ip' => [
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => TRUE,
+          'default' => '',
+          'description' => 'User IP',
+        ],
+        'uid' => [
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => TRUE,
+          'default' => '',
+          'description' => 'User ID',
+        ],
+        'type' => [
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => TRUE,
+          'default' => '',
+          'description' => 'Log type',
+        ],
+      ],
+      'primary key' => ['lid'],
+    ];
+
+  return $schema;
+}
